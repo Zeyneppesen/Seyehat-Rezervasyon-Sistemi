@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "FirmaDuzenleme";
+    Layout = "~/Views/Shared/Yonet.cshtml";
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e9e8eb;
+    }
+
+
+    /* Style inputs with type="text", select elements and textareas */
+    input[type=text], select, textarea {
+        width: 100%; /* Full width */
+        padding: 12px; /* Some padding */
+        border: 1px solid #ccc; /* Gray border */
+        border-radius: 4px; /* Rounded borders */
+        box-sizing: border-box; /* Make sure that padding and width stays in place */
+        margin-top: 6px; /* Add a top margin */
+        margin-bottom: 16px; /* Bottom margin */
+        resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+    }
+
+    /* Style the submit button with a specific background color etc */
+    input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .tr {
+        border-bottom: 1px solid #ddd;
+        background-color: #e9e8eb;
+        font-size: 12px;
+    }
+
+    /* Add a background color and some padding around the form */
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    .btn {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Green */
+    .success {
+        border-color: #04AA6D;
+        color: green;
+    }
+
+        .success:hover {
+            background-color: #04AA6D;
+            color: white;
+        }
+</style>
+<div class="container">
+
+    <form>
+        <div class="col-md-push-9">
+            <a href="/Home/FirmaAyar" type="button" id="duzenle" class="btn btn-danger">FİRMA BİLGİLERİ GERİ DÖN</a>
+        </div>
+        <label for="fname">Firma ID</label>
+        <input type="text" value="@Fonksiyonlar.FirmaID" id="ID" name="ID" placeholder="Ünvan">
+
+        <label for="fname">Firma Ünvanı</label>
+        <input type="text" value="@Fonksiyonlar.FirmaUnvani" id="funvan" name="funvan" placeholder="Ünvan">
+
+        <label for="fname">Faliyet Alanı</label>
+        <input type="text" value="@Fonksiyonlar.FaliyetAlani" id="falan" name="falan" placeholder="Faliyet">
+
+        <label for="fname">Merkez Adresi</label>
+        <input type="text" value="@Fonksiyonlar.MerkezAdresi" id="madres" name="madres" placeholder="Adres">
+
+        <label for="fname">Firma Telefon</label>
+        <input type="text" value="@Fonksiyonlar.MerkezTel" id="ftel" name="ftel" placeholder="Tel">
+
+        <label for="fname">Personel Sayısı</label>
+        <input type="text" value="@Fonksiyonlar.PersonelSayisi" id="psayi" name="psayi" placeholder="Kaç Çalışanı var">
+
+        <label for="fname">Taşıt Sayısı</label>
+        <input type="text" value="@Fonksiyonlar.TasitSayisi" id="tsayi" name="tsayi" placeholder="Kaç Tane Taşıtı Mevcut">
+
+        <label for="fname">Firma No</label>
+        <input type="text" value="@Fonksiyonlar.FirmaNo" id="fno" name="fno" placeholder="No">
+
+        <label for="fname">Firma Şifresi</label>
+        <input type="text" value="@Fonksiyonlar.FirmaSifre" id="fsifre" name="fsifre" placeholder="Şifre">
+
+        <div class="d-grid">
+            <button type="button" id="ekle" class="btn success" >KAYDET</button>
+        </div>
+
+
+    </form>
+</div>
+
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/Home/FirmaBilgileri',
+            dataType: 'json',
+            data: $('form').serialize(),
+            success: function (cevap) {
+                var i = 0;
+                var l = cevap.length;
+
+                while (i < l) {
+                    $('#FirmaListe').append('<tr><td style="text-align:center">' + cevap[i].FirmaUnvani +
+                        '</td><td style="text-align:center">' + cevap[i].FaliyetAlani +
+                        '</td><td style="text-align:center">' + cevap[i].MerkezAdresi +
+                        '</td><td style="text-align:center">' + cevap[i].MerkezTel +
+                        '</td><td style="text-align:center">' + cevap[i].PersonelSayisi +
+                        '</td><td style="text-align:center">' + cevap[i].TasitSayisi +
+                        '</td><td style="text-align:center">' + cevap[i].FirmaNo +
+                        '</td><td style="text-align:center">' + cevap[i].FirmaSifre +
+                        '</td><th style="text-align:center"><a href="/Home/FirmaGuncelle?&ID=' + cevap[i].FirmaID +
+                        '"><input class="btn btn-primary" type="button" value="Düzenle"/></th></a><th style="text-align:center"><a href="/Home/FirmaAyar?&ID=' + cevap[i].FirmaID +
+                        '"><input class="btn btn-danger" type="button" value="Sil"/></th></a></tr>');
+
+                    i++;
+
+                }
+
+            }
+
+        });
+
+
+
+
+        $('#ekle').click(function () {
+            var ID = $("#ID").val();
+            var name = $("#name").val();
+            var falan = $("#falan").val();
+            var madres = $("#madres").val();
+            var ftel = $("#ftel").val();
+            var psayi = $("#psayi").val();
+            var tsayi = $("#tsayi").val();
+            var fno = $("#fno").val();
+            var fsifre = $("#fsifre").val();
+            if (name != "" && falan != "" && madres != "" && ftel != "" && psayi != "" && tsayi != "" && fno != "" && fsifre != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Home/FirmaEkle',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        $(location).prop('href', '/Home/FirmaAyar')
+                        $('#name').val("");
+                        $('#falan').val("");
+                        $('#madres').val("");
+                        $('#ftel').val("");
+                        $('#psayi').val("");
+                        $('#tsayi').val("");
+                        $('#fno').val("");
+                        $('#fsifre').val("");
+                    }
+
+                });
+            }
+            else {
+                alert("Lütfen Eklemek İstediğiniz Firma Alanlarını Boş Geçmeyiniz.")
+            }
+
+        });
+
+
+
+    });
+</script>

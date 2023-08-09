@@ -1,0 +1,360 @@
+﻿
+@{
+    ViewBag.Title = "FirmaCuzdan";
+    Layout = "~/Views/Shared/FirmaLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 1100px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+
+    button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 18px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+    }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+
+
+
+    input[type=text], select {
+        width: 95%;
+        padding: 12px 20px;
+        margin: 8px 18px;
+        display: block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 95%;
+        background-color: #04AA6D;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+    label {
+        font-size: 22px;
+    }
+</style>
+
+<style>
+    /* Red border */
+    hr.new1 {
+        border-top: 1px solid red;
+    }
+
+    /* Dashed red border */
+    hr.new2 {
+        border-top: 1px dashed red;
+    }
+
+    /* Dotted red border */
+    hr.new3 {
+        border-top: 1px dotted red;
+    }
+
+    /* Thick red border */
+    hr.new4 {
+        border: 1px solid red;
+    }
+
+    /* Large rounded green border */
+    hr.new5 {
+        border: 7px solid green;
+        border-radius: 5px;
+    }
+
+    hr.new6 {
+        border: 1px solid black;
+    }
+</style>
+
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 40%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @@-webkit-keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    @@keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #1f3646;
+        color: white;
+    }
+
+    .modal-body {
+        padding: 2px 16px;
+    }
+
+    .modal-footer {
+        padding: 2px 16px;
+        background-color: #1f3646;
+        color: white;
+    }
+</style>
+
+
+
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div id="Dbaslik" class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="Mbaslik"></h2>
+        </div>
+        <div class="modal-body">
+            <div id="Micerik"></div>
+        </div>
+        <div id="Dfoter" class="modal-footer">
+            <h3 id="Mfoter"></h3>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <h2 style="text-align:center;font-weight:bold">ESENPAY CÜZDANIM</h2>
+    <hr class="new5">
+
+    <br />
+    <br />
+    <div class="card">
+        <label>Kartım ve Bakiyem</label>
+        <hr class="new6">
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <h3>BAKİYE</h3>
+                <hr class="new6">
+                @if (ViewBag.Durum != "0")
+                {
+                    <br />
+                    <br />
+                    <h1 style="color:green"><b>@ViewBag.Bakiye ₺</b></h1>
+                    <br />
+                    <br />
+                    <button onclick="Oku(@ViewBag.Bakiye)">Yükleme Yap</button>
+                    <br />
+                }
+                else
+                {
+                    <h5>ESENPAY Cüzdan Kartı Bilgileriniz Bulunamadı.</h5>
+                    <button id="Olustur">Hesap Oluştur</button>
+                    <br />
+                }
+            </div>
+            <div class="col-lg-8" style="background-color:#e8e4e4">
+
+                @if (ViewBag.Durum != "0")
+                {
+                    <h3>KART BİLGİLERİ</h3>
+                    <hr class="new6">
+                    <h3 style="text-align:left"><u>   ESENPAY</u></h3>
+                    <br />
+                    <h2 style="text-align:center">   @ViewBag.KartNumarasi</h2>
+                    <div class="col-lg-12">
+                        <div class="col-lg-9">
+                            <h5 style="text-align:right">   TRHU: @ViewBag.SonTarih</h5>
+                        </div>
+                        <div class="col-lg-3">
+
+                        </div>
+                    </div>
+                    <h5 style="text-align:left">      @ViewBag.Adi</h5>
+                    <h5 style="text-align:left">      @ViewBag.IBAN</h5>
+                }
+                else
+                {
+
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div>
+            <h5 style="text-align:center;font-weight:bold">ESEN REZERVASYON ESENPAY GÜVENLİ ÖDEME SİSTEMİ</h5>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#Olustur').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/Index/FirmaHesapOlustur',
+                dataType: 'json',
+                data: $('form').serialize(),
+                success: function (cevap) {
+                    if (cevap == "0") {
+                        alert("Hesap Oluşturma İşleminde Hata Oluştu.")
+                    }
+                    else {
+                        alert("Kart Bilgileriniz Oluşturuldu.")
+                        window.location.reload()
+                    }
+
+                }
+
+            });
+        });
+    });
+</script>
+
+<script>
+    function Oku(bakiye) {
+        var modal = document.getElementById("myModal");
+        document.getElementById("Mbaslik").innerHTML = "Hesabınıza Yükleme Yapınız.";
+        document.getElementById("Micerik").innerHTML = "<label for=\"expyear\">Tutar Giriniz.</label><input type=\"text\" id=\"baki\" name=\"baki\" placeholder=\"0,00\"><button onclick=\"Yukle($(baki).val())\">Yükle</button>";
+        document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon ESENPAY Yükleme Hizmetleri";
+        // Get the button that opens the modal
+        document.getElementById("Dbaslik").style.backgroundColor = "#1f3646";
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+
+
+    function Yukle(al) {
+        $.ajax({
+            type: 'POST',
+            url: '/Index/BakiyeYukle',
+            dataType: 'json',
+            data: "&Bakiye="+al+"&KulTur=2",
+            success: function (cevap) {
+                if (cevap == "0") {
+                    alert("Yükleme İşleminde Hata Oluştu.")
+                }
+                else {
+                    alert("Bakiyeniz Güncellendi.")
+                    window.location.reload()
+                }
+
+            }
+
+        });
+    }
+
+
+
+</script>
+

@@ -1,0 +1,206 @@
+﻿
+@{
+    ViewBag.Title = "Yonetim";
+    Layout = "~/Views/Shared/Yonet.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #0c43c7;
+        border-radius: 7px;
+    }
+</style>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+
+    input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .btn {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .success {
+        border-color: #04AA6D;
+        color: green;
+    }
+
+        .success:hover {
+            background-color: #04AA6D;
+            color: white;
+        }
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @@media screen and (max-width: 600px) {
+        .col-25, .col-75, input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <h1 style="font-weight:bold;text-align:center">
+            SİSTEM AYARLARI
+        </h1>
+        <hr class="rounded" />
+        <h3 style="font-weight:bold">
+            Hakkında:
+        </h3>
+        <form>
+            <div class="col-25">
+                <label for="subject">Mesaj:</label>
+            </div>
+            <div class="col-75">
+                <textarea id="mesaj" name="mesaj" placeholder="Write something.." style="height:200px">@ViewBag.Mesaj</textarea>
+                <div class="d-grid">
+                    <button type="button" id="kaydet" class="btn success">KAYDET</button>
+                </div>
+            </div>
+
+        </form>
+        <br />
+
+    </div>
+
+    <hr class="solid" />
+    <div class="row">
+        <h3 style="font-weight:bold">
+            Giriş Ayarları:
+        </h3>
+        <form>
+            <div class="col-25">
+                <label for="subject">Session (Tepkisiz Kalma) Süresi:</label>
+            </div>
+            <div class="col-75">
+                <div class="d-grid">
+                    <input id="session" name="session" value="@ViewBag.Session"/>
+                    <br />
+
+                    <button type="button" id="seskaydet" class="btn success">KAYDET</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#kaydet').click(function () {
+            var Mesaj = $("#mesaj").val();
+            if (Mesaj != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/HakkindaKaydet',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        if (cevap == 1) {
+                            $(location).prop('href', '/Home/Yonetim')
+                        }
+                        else {
+                            alert("Kaydetme İşleminde Hata Oluştu.")
+                        }
+                    }
+
+                });
+            }
+            else {
+                alert("Lütfen Eklemek İstediğiniz Firma Alanlarını Boş Geçmeyiniz.")
+            }
+
+        });
+
+        $('#seskaydet').click(function () {
+            var Mesaj = $("#session").val();
+            if (Mesaj != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/SessionKaydet',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        if (cevap == 1) {
+                            $(location).prop('href', '/Home/Yonetim')
+                        }
+                        else {
+                            alert("Kaydetme İşleminde Hata Oluştu.")
+                        }
+                    }
+
+                });
+            }
+            else {
+                alert("Lütfen Eklemek İstediğiniz Firma Alanlarını Boş Geçmeyiniz.")
+            }
+
+        });
+
+    });
+</script>
+
+

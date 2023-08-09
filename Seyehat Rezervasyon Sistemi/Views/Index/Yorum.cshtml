@@ -1,0 +1,672 @@
+﻿
+@{
+    ViewBag.Title = "Yorum";
+    if (Fonksiyonlar.FirmaID=="0")
+    {
+        Layout = "~/Views/Shared/IndexLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/FirmaLayout.cshtml";
+    }
+    var say = 0;
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+
+    .container {
+        padding: 20px 160px;
+    }
+    .heading {
+        font-size: 25px;
+        margin-right: 25px;
+    }
+
+    .fa {
+        font-size: 25px;
+    }
+
+    .checked {
+        color: orange;
+    }
+
+    /* Three column layout */
+    .side {
+        float: left;
+        width: 15%;
+        margin-top: 10px;
+    }
+
+    .middle {
+        margin-top: 10px;
+        float: left;
+        width: 70%;
+    }
+
+    /* Place text to the right */
+    .right {
+
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* The bar container */
+    .bar-container {
+        width: 99%;
+        background-color: #f1f1f1;
+        text-align: center;
+        color: white;
+    }
+
+    /* Individual bars */
+    .bar-5 {
+        width: @ViewBag.Yuzde5%;
+        height: 18px;
+        background-color: #04AA6D;
+    }
+
+    .bar-4 {
+        width: @ViewBag.Yuzde4%;
+        height: 18px;
+        background-color: #2196F3;
+    }
+
+    .bar-3 {
+        width: @ViewBag.Yuzde3%;
+        height: 18px;
+        background-color: #00bcd4;
+    }
+
+    .bar-2 {
+        width: @ViewBag.Yuzde2%;
+        height: 18px;
+        background-color: #ff9800;
+    }
+
+    .bar-1 {
+        width: @ViewBag.Yuzde1%;
+        height: 18px;
+        background-color: #f44336;
+    }
+
+    /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+    @@media (max-width: 400px) {
+        .side, .middle {
+            width: 100%;
+        }
+
+        .right {
+            display: none;
+        }
+    }
+
+
+
+
+    .btn {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        width:97%;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    /* Green */
+    .success {
+        border-color: #04AA6D;
+        color: green;
+    }
+
+        .success:hover {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+    .danger {
+        border-color: red;
+        color: red;
+    }
+
+        .danger:hover {
+            background-color: red;
+            color: white;
+        }
+</style>
+
+<style>
+    hr.solid {
+        border-top: 4px solid #bbb;
+        width: 97%;
+    }
+
+    hr.solid1 {
+        border-top: 4px solid #bbb;
+        width: 100%;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #1f3646;
+        border-radius: 7px;
+    }
+
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        width: 100%;
+    }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+
+    .container {
+        padding: 2px 16px;
+    }
+
+
+
+
+
+
+
+    .star-rating {
+        position: center;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+    }
+
+    .radio-input {
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .radio-label {
+        position: center;
+        cursor: pointer;
+        font-size: 0;
+        color: rgba(0,0,0,0.2);
+        transition: color 0.1s ease-in-out;
+    }
+
+        .radio-label:before {
+            content: "★";
+            display: inline-block;
+            font-size: 32px;
+        }
+
+    .radio-input:checked ~ .radio-label {
+        color: #ffc700;
+        color: gold;
+    }
+
+    .radio-label:hover,
+    .radio-label:hover ~ .radio-label {
+        color: goldenrod;
+    }
+
+        .radio-input:checked + .radio-label:hover,
+        .radio-input:checked + .radio-label:hover ~ .radio-label,
+        .radio-input:checked ~ .radio-label:hover,
+        .radio-input:checked ~ .radio-label:hover ~ .radio-label,
+        .radio-label:hover ~ .radio-input:checked ~ .radio-label {
+            color: darkgoldenrod;
+        }
+
+
+    .average-rating {
+        position: relative;
+        appearance: none;
+        color: transparent;
+        width: auto;
+        display: inline-block;
+        vertical-align: baseline;
+        font-size: 25px;
+    }
+
+        .average-rating::before {
+            --percent: calc(4.3/5*100%);
+            content: '★★★★★';
+            position: absolute;
+            top: 0;
+            left: 0;
+            color: rgba(0,0,0,0.2);
+            background: linear-gradient(90deg, gold var(--percent), rgba(0,0,0,0.2) var(--percent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+</style>
+
+
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @@-webkit-keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    @@keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #1f3646;
+        color: white;
+    }
+
+    .modal-body {
+        padding: 2px 16px;
+    }
+
+    .modal-footer {
+        padding: 2px 16px;
+        background-color: #1f3646;
+        color: white;
+    }
+</style>
+
+
+
+<div id="myModal" class="modal">
+
+    <div class="modal-content">
+        <div id="Dbaslik" class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="Mbaslik"></h2>
+        </div>
+        <div class="modal-body">
+            <div id="Micerik"></div>
+        </div>
+        <div id="Dfoter" class="modal-footer">
+            <h3 id="Mfoter"></h3>
+        </div>
+    </div>
+
+</div>
+
+<div class="container">
+    <h1 style="text-align: center; color:#1f3646"><b>Puanlama Ve Yorumlar</b></h1>
+    <hr class="rounded">
+    @if (Fonksiyonlar.FirmaID == "0")
+    {
+        <div class="card">
+            <div class="container">
+                <h2><b>Firma Bilgileri: </b></h2>
+                <div class="col-lg-12">
+                    <div class="col-lg-2">
+                        <br />
+                        <img src="/Fotograf/@ViewBag.Flogo" class="rounded-circle" style="margin:auto;display:block;width:150px;height:150px" alt="Cinque Terre">
+                    </div>
+                    <div class="col-lg-10">
+                        <div class="col-lg-3">
+                            <h4><b>Firma Ünvanı:</b></h4>
+                            <h4><b>Firma Alanı:</b></h4>
+                            <h4><b>Firma Adresi:</b></h4>
+                            <h4><b>Firma Telefon:</b></h4>
+                            <h4><b>Personel Sayısı:</b></h4>
+                            <h4><b>Personel Sayısı:</b></h4>
+                        </div>
+                        <div class="col-lg-8">
+
+                            <h4>@ViewBag.Funvan</h4>
+                            <h4>@ViewBag.Falan</h4>
+                            <h4>@ViewBag.Madres</h4>
+                            <h4>@ViewBag.Mtel</h4>
+                            <h4>@ViewBag.Psayi</h4>
+                            <h4>@ViewBag.Tsayi</h4>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+    }
+
+    <div class="card">
+        <div class="container">
+            <span class="heading"><h4><b>Kullanıcı Oyu </b></h4></span>
+            <span class="fa fa-star @ViewBag.S1"></span>
+            <span class="fa fa-star @ViewBag.S2"></span>
+            <span class="fa fa-star @ViewBag.S3"></span>
+            <span class="fa fa-star @ViewBag.S4"></span>
+            <span class="fa fa-star @ViewBag.S5"></span>
+            <p><b>@ViewBag.ToplamKisi</b> Toplam yoruma sayısına göre, <b>@ViewBag.Ort</b> Ortalama puanı</p>
+            <hr class="solid">
+
+
+            <div class="row">
+                <div class="side">
+                    <div>5 Yıldız</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-5"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>@ViewBag.Puan5 Adet</div>
+                </div>
+                <div class="side">
+                    <div>4 Yıldız</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-4"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>@ViewBag.Puan4 Adet</div>
+                </div>
+                <div class="side">
+                    <div>3 Yıldız</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-3"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>@ViewBag.Puan3 Adet</div>
+                </div>
+                <div class="side">
+                    <div>2 Yıldız</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-2"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>@ViewBag.Puan2 Adet</div>
+                </div>
+                <div class="side">
+                    <div>1 Yıldız</div>
+                </div>
+                <div class="middle">
+                    <div class="bar-container">
+                        <div class="bar-1"></div>
+                    </div>
+                </div>
+                <div class="side right">
+                    <div>@ViewBag.Puan1 Adet</div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+    </div>
+    @if (Fonksiyonlar.FirmaID == "0")
+    {
+        <br />
+        <h3 style="text-align: center; color:#1f3646"><b>Firmayı Değerlendir</b></h3>
+        <hr class="rounded">
+        <div class="card">
+            <div class="container">
+                <label>Değerlendir: </label>
+                <form class="star-rating">
+
+                    <input class="radio-input" type="radio" @ViewBag.KS5 id="star5" name="star-input" value="5" onclick="Bak()" />
+                    <label class="radio-label" class for="star5" title="5 stars">5 stars</label>
+
+                    <input class="radio-input" type="radio" @ViewBag.KS4 id="star4" name="star-input" value="4" onclick="Bak()" />
+                    <label class="radio-label" for="star4" title="4 stars">4 stars</label>
+
+                    <input class="radio-input" type="radio" @ViewBag.KS3 id="star3" name="star-input" value="3" onclick="Bak()" />
+                    <label class="radio-label" for="star3" title="3 stars">3 stars</label>
+
+                    <input class="radio-input" type="radio" @ViewBag.KS2 id="star2" name="star-input" value="2" onclick="Bak()" />
+                    <label class="radio-label" for="star2" title="2 stars">2 stars</label>
+
+                    <input class="radio-input" type="radio" @ViewBag.KS1 id="star1" name="star-input" value="1" onclick="Bak()" />
+                    <label class="radio-label" for="star1" title="1 star">1 star</label>
+                    <br />
+
+                </form>
+                <h4 id="Deger"></h4>
+                <label>Yorumunuz:</label>
+                <form>
+                    @if (ViewBag.KYorum != null && ViewBag.KYorum != "")
+                    {
+                        <textarea id="yrm" name="yrm" placeholder="Yorumunuzu yazınız..." style="height:200px;width:97%;padding:16px 16px">@ViewBag.KYorum</textarea>
+                        <a id="Kaydet" class="btn success">Değerlendirmeyi Kaydedin</a>
+                        <br />
+                        <br />
+                        <a id="Sil" class="btn danger">Değerlendirmeyi Silin</a>
+                    }
+                    else
+                    {
+                        <textarea id="yrm" name="yrm" placeholder="Yorumunuzu yazınız..." style="height:200px;width:97%;padding:16px 16px"></textarea>
+                        <a id="Kaydet" class="btn success">Firmayı Değerlendirin</a>
+                    }
+
+                </form>
+                <br />
+            </div>
+        </div>
+        <br />
+    }
+
+    <h3 style="text-align: center; color:#1f3646"><b>Yapılan Yorumlar</b></h3>
+    <hr class="rounded">
+    @foreach (var item in ViewBag.Liste)
+    {<div class="card">
+            <div class="col-12">
+                <div class="col-3">
+                    <h3><b>@item.Sira)</b> @item.Ad @item.Soyad</h3>
+                    <span class="heading"><h4><b></b></h4></span>
+                    <span class="fa fa-star @item.S1"></span>
+                    <span class="fa fa-star @item.S2"></span>
+                    <span class="fa fa-star @item.S3"></span>
+                    <span class="fa fa-star @item.S4"></span>
+                    <span class="fa fa-star @item.S5"></span>
+                    <p style="padding: 0px 28px"><b>@item.Puan</b> Puanında Değerlendirmiştir.</p>
+                    <h4 style="padding: 0px 28px"><b>Yorumu: </b></h4>
+                </div>
+                <div class="col-9" style="overflow: clip;">
+                    <p>
+                        <h4 style="font-family: 'Californian FB'; font-weight: bold; text-align: justify; padding: inherit; padding: 0px 30px ">
+                            @item.Yorum
+                        </h4>
+                    </p>
+                    <a name="@item.YorumTam" class="btn btn-primary" onclick="Oku(this.name)">Yorumu Gör</a>
+                    <br />
+                </div>
+            </div>
+
+        </div>
+        <hr class="solid1">
+    }
+
+</div>
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#Kaydet').click(function () {
+            var star1 = document.getElementById("star1").checked;
+            var star2 = document.getElementById("star2").checked;
+            var star3 = document.getElementById("star3").checked;
+            var star4 = document.getElementById("star4").checked;
+            var star5 = document.getElementById("star5").checked;
+            var Yorum = $("#yrm").val();
+            if (Yorum != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/YorumKaydet',
+                    dataType: 'json',
+                    data: "&S1=" + star1 + "&S2=" + star2 + "&S3=" + star3 + "&S4=" + star4 + "&S5=" + star5 + "&Yorum=" + Yorum + "",
+                    success: function (cevap) {
+                        if (cevap == "0") {
+                            alert("Kayıt İşleminde Hata Oluştu.")
+                        }
+                        else {
+                            alert("Yorum Kaydedildi.")
+                            window.location.reload()
+                        }
+
+                    }
+
+                });
+            }
+            else {
+                alert("Lütfen yayınlamak istediğiniz yorumu yazınız.");
+            }
+
+        });
+
+        $('#Sil').click(function () {
+            $.ajax({
+                type: 'POST',
+                url: '/Index/YorumSil',
+                dataType: 'json',
+                success: function (cevap) {
+                    if (cevap == "0") {
+                        alert("Silme İşleminde Hata Oluştu.")
+                    }
+                    else {
+                        alert("Yorum Silindi.")
+                        window.location.reload()
+                    }
+
+                }
+
+            });
+
+        });
+
+
+
+    });
+</script>
+<script>
+    function Bak() {
+        var star1 = document.getElementById("star1").checked;
+        var star2 = document.getElementById("star2").checked;
+        var star3 = document.getElementById("star3").checked;
+        var star4 = document.getElementById("star4").checked;
+        var star5 = document.getElementById("star5").checked;
+        var Sayi = "";
+        if (star1 == "true") {
+            Sayi = "1";
+        }
+        else if (star2 == "true") {
+            Sayi = "2";
+        } else if (star3 == "true") {
+            Sayi = "3";
+        } else if (star4 == "true") {
+            Sayi = "4";
+        } else if (star5 == "true") {
+            Sayi = "5";
+        }
+    }
+</script>
+
+<script>
+    function Oku(al) {
+        var modal = document.getElementById("myModal");
+        document.getElementById("Mbaslik").innerHTML = "Seçtiğiniz Değerlendirme Yorumun İçeriği";
+        document.getElementById("Micerik").innerHTML = "<div class:\"container\"><h4 style=\"color: black; text-align: justify\"><b>" + al + "</b><h4></div>";
+        document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+        document.getElementById("Dbaslik").style.backgroundColor = "#1f3646";
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+    // Get the modal
+
+</script>

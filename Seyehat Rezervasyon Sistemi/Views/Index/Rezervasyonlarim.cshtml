@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "Rezervasyonlarim";
+    Layout = "~/Views/Shared/IndexLayout.cshtml";
+    int say = 1;
+}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #0c43c7;
+        border-radius: 7px;
+    }
+</style>
+
+<h2 style="font-weight:bold;text-align:center;">Rezervasyonlarım</h2>
+<div class="container">
+    <hr class="rounded">
+    @if (Fonksiyonlar.LoginSepet > 0)
+    {
+        foreach (var item in ViewBag.Liste)
+        {
+            if (say != 1)
+            {
+                <hr class="solid">
+            }
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h5 style="font-weight:bold">@say )</h5>
+                    <div class="col-lg-12">
+                        <div style="text-align:center"><img src="/Fotograf/@item.Logo" class="img2" alt="Avatar" style="width:60px"></div>
+                        <div class="col-lg-6">
+                            <p><strong>Firma : </strong>@item.FirmaUnvani</p>
+                            <p><strong>Nereden : </strong>@item.BaslangicKonumu</p>
+                            <p><strong>Nereye : </strong>@item.BitisKonumu</p>
+                            <p><strong>Koltuk Numarası : </strong>@item.KoltukNumarasi</p>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6">
+                                    <p><strong>Tarih : </strong>@item.Tarih</p>
+                                    <p><strong>Saat : </strong>@item.Saat</p>
+                                    <p><strong>Fiyat : </strong>@item.Fiyat ₺</p>
+                                </div>
+                                <div class="col-lg-6">
+                                    <a href="/Index/SatinAl?&KOD=1&ID=@item.ID" type="button" id="ekle" class="btn btn-primary">Rezervasyonu Satın Al</a>
+                                    <br />
+                                    <br />
+                                    <a href="/Index/RezervasyonIptal?&ID=@item.ID" type="button" id="ekle" class="btn btn-danger">Rezervasyonu İptal Et</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            say++;
+        }
+        <hr class="rounded">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h3 style="font-weight:bold;">Toplam</h3>
+
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <h5 style="font-weight:bold">@(say-1) Adet Bilet.</h5>
+                        <h5 style="font-weight:bold">@ViewBag.ToplamFiyat ₺.</h5>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="/Index/SatinAl?&KOD=0&ID=0" type="button" id="ekle" class="btn btn-primary">Hepsini Satın Al</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Seyehat Planı Rezerve Etmek İçin Anasayfa'ya Yönlen veya <a href="/Index/Index">Tıkla</a><br /></h4>
+    }
+    else
+    {
+        <h3 style="font-weight:bold">Merhaba @Fonksiyonlar.LoginAD .  </h3>
+        <h4> Şuanda rezerve edilen herhangi bir seyehat planın yok. Eğer bir Rezervasyon Planı Yapmak İstiyorsan Anasayfa'ya Yönlenmen veya <a href="/Index/Index">Tıklaman</a> Yeterli.<br /> Keyifli Günler Dileriz.</h4>
+    }
+
+</div>
+

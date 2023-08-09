@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "SatinAlinan";
+    Layout = "~/Views/Shared/IndexLayout.cshtml";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<style>
+
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #0c43c7;
+        border-radius: 7px;
+    }
+
+    .btn {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 14px 28px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+</style>
+<div class="container">
+    @if (ViewBag.ToplamSayi != null)
+    {
+        <h2 style="font-weight:bold;text-align:center;">Satın Alınan Seyehat Planları</h2>
+        <hr class="rounded">
+        foreach (var item in ViewBag.Liste)
+        {
+            <div class="container" style="background-color: #1f3646">
+                <div class="col-lg-12">
+                    <div class="col-lg-2">
+                        <h4 style="color:white">@item.Sira)</h4>
+                        <div style="text-align:center"><img src="/Fotograf/@item.Logo" class="img2" alt="Avatar" style="width:60px"></div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="col-lg-4">
+                            <h4 style="color:white"></h4>
+                            <h4 style="color:white">@item.FirmaUnvani </h4>
+                            <br />
+                            <h4 style="color:white">Koltuk No: @item.KoltukNumarasi </h4>
+                            <br />
+                            <h4 style="color: white; float: left">@item.KalkisKonumu <i class="fa fa-arrow-right"></i> @item.InisKonumu</h4>
+                        </div>
+                        <div class="col-lg-4">
+                            <h4 style="color: white; float: right;" Valign="bottom"> @item.MusteriAdi @item.MusteriSoyadi </h4>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <h4 style="color: white; float: right;" Valign="bottom"><i class='far fa-clock' style='font-size:16px'></i> @item.Tarih @item.Saat</h4>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <h5 style="float:right;color:white">Sefer Sayısı: @item.SeferSayisi</h5>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="d-grid">
+                            <button type="button" id="@item.FID" onclick="Puanla(this.id)" class="btn success">Firmayı Puanla</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h5 style="float:right;color:white">Alınan Fiyat: @item.Fiyat</h5>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container">
+                <hr class="solid">
+            </div>
+        }
+
+
+        <div class="col-lg-12">
+            <div class="col-lg-6">
+
+                <h4><b>Toplam Bilet: @ViewBag.ToplamSayi Adet.</b></h4>
+            </div>
+            <div class="col-lg-6">
+
+                <h4 style="text-align:right"><b>Toplam Tutar: @ViewBag.ToplamFiyat</b></h4>
+            </div>
+        </div>
+
+    }
+</div>
+
+
+
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    function Puanla(id) {
+        window.location.assign("/Index/Yorum?&ID="+id);
+        //$.ajax({
+        //    type: 'POST',
+        //    url: '/Index/Yorum',
+        //    dataType: 'json',
+        //    data: "&ID=" + id + "",
+        //    success: function (cevap) {
+        //        if (cevap == "0") {
+        //            alert("Yükleme İşleminde Hata Oluştu.")
+        //        }
+        //        else {
+        //            alert("Bakiyeniz Güncellendi.")
+        //            window.location.reload()
+        //        }
+
+        //    }
+
+        //});
+    }
+</script>

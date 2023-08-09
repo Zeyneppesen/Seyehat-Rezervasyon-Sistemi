@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Formicerik";
+    Layout = "~/Views/Shared/Yonet.cshtml";
+}
+<style>
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @@media screen and (max-width: 600px) {
+        .col-25, .col-75, input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #0c43c7;
+        border-radius: 7px;
+    }
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-25">
+            <label for="fname">ADI VE SOYADI</label>
+        </div>
+        <div class="col-75">
+            <p>@ViewBag.ad</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="fname">EMAİL ADRESİ</label>
+        </div>
+        <div class="col-75">
+            <p>@ViewBag.mail</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="fname">KONU</label>
+        </div>
+        <div class="col-75">
+            <p>@ViewBag.konu</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-25">
+            <label for="fname">MESAJ</label>
+        </div>
+        <div class="col-75">
+            <p>@ViewBag.mesaj</p>
+        </div>
+    </div>
+</div>
+

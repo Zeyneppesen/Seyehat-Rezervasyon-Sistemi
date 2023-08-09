@@ -1,0 +1,347 @@
+﻿
+@{
+    ViewBag.Title = "SeferOlustur";
+    Layout = "~/Views/Shared/FirmaLayout.cshtml";
+}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100%;
+        border: 1px solid #ddd;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 16px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #e9e8eb;
+    }
+
+
+    /* Style inputs with type="text", select elements and textareas */
+    input[type=text], select, textarea {
+        width: 100%; /* Full width */
+        padding: 12px; /* Some padding */
+        border: 1px solid #ccc; /* Gray border */
+        border-radius: 4px; /* Rounded borders */
+        box-sizing: border-box; /* Make sure that padding and width stays in place */
+        margin-top: 6px; /* Add a top margin */
+        margin-bottom: 16px; /* Bottom margin */
+        resize: vertical /* Allow the user to vertically resize the textarea (not horizontally) */
+    }
+
+    /* Style the submit button with a specific background color etc */
+    input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    input {
+        font-size: 15px;
+    }
+
+    .tr {
+        border-bottom: 1px solid #ddd;
+        background-color: #e9e8eb;
+        font-size: 18px;
+    }
+
+    label {
+        font-size: 15px;
+    }
+    /* Add a background color and some padding around the form */
+    .container {
+        border-radius: 5px;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    .btn {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 14px 28px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    /* Green */
+    .success {
+        border-color: #04AA6D;
+        color: green;
+    }
+
+        .success:hover {
+            nirecw33krbvnmcdkbackground-color: #04AA6D;cwhwwwwwwwhhhhhh2222222hışfmi3
+            color: white;
+        }
+</style>
+<div class="container">
+
+    <form>
+        <h2 style="text-align:center">SEFER OLUŞTUR</h2>
+
+        <label for="fname">SEFER ID</label>
+        <input type="text" id="id" name="id" value="@ViewBag.ID" placeholder="ID Bilgisi">
+
+        <label for="country">TAŞIT</label>
+        <select style="font-size:15px" name='tasit' onchange='this.form()'>
+            <option value="@ViewBag.Tasit">@ViewBag.Tasit</option>
+            @foreach (var item in ViewBag.Tip)
+            {
+                <option value="@item.Text">@item.Text</option>
+            }
+        </select>
+
+        <label for="fname">KALKIŞ KONUMU</label>
+        <select style="font-size:15px" name="basla" onchange='this.form()'>
+            <option value="@ViewBag.basla">@ViewBag.basla</option>
+            <option value="İstanbul">İstanbul</option>
+            <option value="Ankara">Ankara</option>
+            <option value="İzmir">İzmir</option>
+            <option value="Adana">Adana</option>
+            <option value="Adıyaman">Adıyaman</option>
+            <option value="Afyonkarahisar">Afyonkarahisar</option>
+            <option value="Ağrı">Ağrı</option>
+            <option value="Aksaray">Aksaray</option>
+            <option value="Amasya">Amasya</option>
+            <option value="Antalya">Antalya</option>
+            <option value="Ardahan">Ardahan</option>
+            <option value="Artvin">Artvin</option>
+            <option value="Aydın">Aydın</option>
+            <option value="Balıkesir">Balıkesir</option>
+            <option value="Bartın">Bartın</option>
+            <option value="Batman">Batman</option>
+            <option value="Bayburt">Bayburt</option>
+            <option value="Bilecik">Bilecik</option>
+            <option value="Bingöl">Bingöl</option>
+            <option value="Bitlis">Bitlis</option>
+            <option value="Bolu">Bolu</option>
+            <option value="Burdur">Burdur</option>
+            <option value="Bursa">Bursa</option>
+            <option value="Çanakkale">Çanakkale</option>
+            <option value="Çankırı">Çankırı</option>
+            <option value="Çorum">Çorum</option>
+            <option value="Denizli">Denizli</option>
+            <option value="Diyarbakır">Diyarbakır</option>
+            <option value="Düzce">Düzce</option>
+            <option value="Edirne">Edirne</option>
+            <option value="Elazığ">Elazığ</option>
+            <option value="Erzincan">Erzincan</option>
+            <option value="Erzurum">Erzurum</option>
+            <option value="Eskişehir">Eskişehir</option>
+            <option value="Gaziantep">Gaziantep</option>
+            <option value="Giresun">Giresun</option>
+            <option value="Gümüşhane">Gümüşhane</option>
+            <option value="Hakkâri">Hakkâri</option>
+            <option value="Hatay">Hatay</option>
+            <option value="Iğdır">Iğdır</option>
+            <option value="Isparta">Isparta</option>
+            <option value="Kahramanmaraş">Kahramanmaraş</option>
+            <option value="Karabük">Karabük</option>
+            <option value="Karaman">Karaman</option>
+            <option value="Kars">Kars</option>
+            <option value="Kastamonu">Kastamonu</option>
+            <option value="Kayseri">Kayseri</option>
+            <option value="Kırıkkale">Kırıkkale</option>
+            <option value="Kırklareli">Kırklareli</option>
+            <option value="Kırşehir">Kırşehir</option>
+            <option value="Kilis">Kilis</option>
+            <option value="Kocaeli">Kocaeli</option>
+            <option value="Konya">Konya</option>
+            <option value="Kütahya">Kütahya</option>
+            <option value="Malatya">Malatya</option>
+            <option value="Manisa">Manisa</option>
+            <option value="Mardin">Mardin</option>
+            <option value="Mersin">Mersin</option>
+            <option value="Muğla">Muğla</option>
+            <option value="Muş">Muş</option>
+            <option value="Nevşehir">Nevşehir</option>
+            <option value="Niğde">Niğde</option>
+            <option value="Ordu">Ordu</option>
+            <option value="Osmaniye">Osmaniye</option>
+            <option value="Rize">Rize</option>
+            <option value="Sakarya">Sakarya</option>
+            <option value="Samsun">Samsun</option>
+            <option value="Siirt">Siirt</option>
+            <option value="Sinop">Sinop</option>
+            <option value="Sivas">Sivas</option>
+            <option value="Şırnak">Şırnak</option>
+            <option value="Tekirdağ">Tekirdağ</option>
+            <option value="Tokat">Tokat</option>
+            <option value="Trabzon">Trabzon</option>
+            <option value="Tunceli">Tunceli</option>
+            <option value="Şanlıurfa">Şanlıurfa</option>
+            <option value="Uşak">Uşak</option>
+            <option value="Van">Van</option>
+            <option value="Yalova">Yalova</option>
+            <option value="Yozgat">Yozgat</option>
+            <option value="Zonguldak">Zonguldak</option>
+        </select>
+
+        <label for="fname">VARIŞ KONUMU</label>
+        <select style="font-size:15px" name="bit" onchange='this.form()'>
+            <option value="@ViewBag.bit">@ViewBag.bit</option>
+            <option value="İstanbul">İstanbul</option>
+            <option value="Ankara">Ankara</option>
+            <option value="İzmir">İzmir</option>
+            <option value="Adana">Adana</option>
+            <option value="Adıyaman">Adıyaman</option>
+            <option value="Afyonkarahisar">Afyonkarahisar</option>
+            <option value="Ağrı">Ağrı</option>
+            <option value="Aksaray">Aksaray</option>
+            <option value="Amasya">Amasya</option>
+            <option value="Antalya">Antalya</option>
+            <option value="Ardahan">Ardahan</option>
+            <option value="Artvin">Artvin</option>
+            <option value="Aydın">Aydın</option>
+            <option value="Balıkesir">Balıkesir</option>
+            <option value="Bartın">Bartın</option>
+            <option value="Batman">Batman</option>
+            <option value="Bayburt">Bayburt</option>
+            <option value="Bilecik">Bilecik</option>
+            <option value="Bingöl">Bingöl</option>
+            <option value="Bitlis">Bitlis</option>
+            <option value="Bolu">Bolu</option>
+            <option value="Burdur">Burdur</option>
+            <option value="Bursa">Bursa</option>
+            <option value="Çanakkale">Çanakkale</option>
+            <option value="Çankırı">Çankırı</option>
+            <option value="Çorum">Çorum</option>
+            <option value="Denizli">Denizli</option>
+            <option value="Diyarbakır">Diyarbakır</option>
+            <option value="Düzce">Düzce</option>
+            <option value="Edirne">Edirne</option>
+            <option value="Elazığ">Elazığ</option>
+            <option value="Erzincan">Erzincan</option>
+            <option value="Erzurum">Erzurum</option>
+            <option value="Eskişehir">Eskişehir</option>
+            <option value="Gaziantep">Gaziantep</option>
+            <option value="Giresun">Giresun</option>
+            <option value="Gümüşhane">Gümüşhane</option>
+            <option value="Hakkâri">Hakkâri</option>
+            <option value="Hatay">Hatay</option>
+            <option value="Iğdır">Iğdır</option>
+            <option value="Isparta">Isparta</option>
+            <option value="Kahramanmaraş">Kahramanmaraş</option>
+            <option value="Karabük">Karabük</option>
+            <option value="Karaman">Karaman</option>
+            <option value="Kars">Kars</option>
+            <option value="Kastamonu">Kastamonu</option>
+            <option value="Kayseri">Kayseri</option>
+            <option value="Kırıkkale">Kırıkkale</option>
+            <option value="Kırklareli">Kırklareli</option>
+            <option value="Kırşehir">Kırşehir</option>
+            <option value="Kilis">Kilis</option>
+            <option value="Kocaeli">Kocaeli</option>
+            <option value="Konya">Konya</option>
+            <option value="Kütahya">Kütahya</option>
+            <option value="Malatya">Malatya</option>
+            <option value="Manisa">Manisa</option>
+            <option value="Mardin">Mardin</option>
+            <option value="Mersin">Mersin</option>
+            <option value="Muğla">Muğla</option>
+            <option value="Muş">Muş</option>
+            <option value="Nevşehir">Nevşehir</option>
+            <option value="Niğde">Niğde</option>
+            <option value="Ordu">Ordu</option>
+            <option value="Osmaniye">Osmaniye</option>
+            <option value="Rize">Rize</option>
+            <option value="Sakarya">Sakarya</option>
+            <option value="Samsun">Samsun</option>
+            <option value="Siirt">Siirt</option>
+            <option value="Sinop">Sinop</option>
+            <option value="Sivas">Sivas</option>
+            <option value="Şırnak">Şırnak</option>
+            <option value="Tekirdağ">Tekirdağ</option>
+            <option value="Tokat">Tokat</option>
+            <option value="Trabzon">Trabzon</option>
+            <option value="Tunceli">Tunceli</option>
+            <option value="Şanlıurfa">Şanlıurfa</option>
+            <option value="Uşak">Uşak</option>
+            <option value="Van">Van</option>
+            <option value="Yalova">Yalova</option>
+            <option value="Yozgat">Yozgat</option>
+            <option value="Zonguldak">Zonguldak</option>
+        </select>
+
+        <fieldset>
+            <label for="departure">TARİH</label>
+            <input value="@ViewBag.Tarih" style="font-size:15px" name="tarih" type="date" class="form-control" id="tarih" i placeholder="Tarih Seçiniz..." required onchange='this.form()'>
+        </fieldset>
+
+        <fieldset>
+            <label for="departure">SAAT</label>
+            <input value="@ViewBag.Saat" style="font-size:15px" name="saat" type="time" class="form-control" id="saat" placeholder="Saat Seçiniz..." required onchange='this.form()'>
+        </fieldset>
+        <label for="fname">FİYAT BELİRLER</label>
+        <input value="@ViewBag.Tutar" type="text" id="fiyat" name="fiyat" placeholder="Yolculuk Kişi Adet Fiyatı Belirle...">
+
+        <div class="d-grid">
+            <button type="button" id="ekle" class="btn success">KAYDET</button>
+        </div>
+
+
+    </form>
+</div>
+
+
+
+
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#ekle').click(function () {
+            var ssayi = $("#ssayi").val();
+            var tasit = $("#tasit").val();
+            var basla = $("#basla").val();
+            var bit = $("#bit").val();
+            var tarih = $("#tarih").val();
+            var saat = $("#saat").val();
+            var fiyat = $("#fiyat").val();
+            if (ssayi != "" && tasit != "" && basla != "" && basla != "Kalkış Konumu Seçiniz." && bit != "" && bit != "Varış Konumu Seçiniz." && tarih != "" && saat != "" && fiyat!="") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/SeferEkle',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        if (cevap==0) {
+                            alert("İşlem Yapılırken Bir Hata Oluştu. Tekrar Deneyiniz.")
+                            $(location).prop('href', '/Index/SeferOluştur')
+                        }
+                        else if (cevap==1) {
+                            $(location).prop('href', '/Index/FirmaSeferler')
+                        }
+                        else {
+                            alert("Lütfen Eklemek İstediğiniz Sefer kalkış ve bitiş Alanlarını Boş Geçmeyiniz.")
+                        }
+                    }
+
+                });
+            }
+            else {
+                alert("Lütfen Eklemek İstediğiniz Sefer Alanlarını Boş Geçmeyiniz.")
+            }
+
+        });
+
+
+
+    });
+</script>
+
+

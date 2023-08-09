@@ -1,0 +1,185 @@
+﻿
+@{
+    ViewBag.Title = "FirmaProfil";
+    Layout = "~/Views/Shared/FirmaLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src='https://kit.fontawesome.com/a076d05399.js'></script>
+<link href="~/Profil.css" rel="stylesheet" />
+<style>
+    .card {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+        max-width: 800px;
+        margin: auto;
+        text-align: center;
+        font-family: arial;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+
+    button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 18px;
+        color: white;
+        background-color: #000;
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: black;
+    }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+
+
+
+    input[type=text], select {
+        width: 95%;
+        padding: 12px 20px;
+        margin: 8px 18px;
+        display: block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    input[type=submit] {
+        width: 95%;
+        background-color: #04AA6D;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 18px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+    label {
+        font-size: 22px;
+    }
+</style>
+<h2 style="text-align:center;font-weight:bold">Firma Profili</h2>
+<br />
+
+<div class="card">
+    <div class="container">
+        <label for="fname">Firma Logo</label>
+        @if (ViewBag.Logo != "")
+        {
+            <img src="/Fotograf/@ViewBag.Logo" class="rounded-circle" style="margin:auto;display:block;width:90px;height:90px" alt="Cinque Terre">
+            <a href="/Index/FotoSil" onclick="Oku()">Fotoğrafı Kaldır</a>
+        }
+        else
+        {
+            <img src="/Fotograf/none.png" class="rounded-circle" style="margin: auto; display: block; width: 90px; height: 90px" alt="Cinque Terre">
+        }
+        <br />
+        @using (Html.BeginForm("ProfilFotoGuncelle", "Index", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @TempData["result"] //Dosya upload sonucu burada yazacak.
+            <div class="custom-file mb-3">
+                <input type="file" class="custom-file-input" id="file" name="file" required>
+                <label class="custom-file-label" for="customFile">Bir Resim Seçiniz...</label>
+            </div>
+            <script>
+                // File Ekleme
+                $(".custom-file-input").on("change", function () {
+                    var fileName = $(this).val().split("\\").pop();
+                    $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+                });
+            </script>
+
+            <button type="submit" onclick="Oku()" class="btn btn-primary">Fotoğrafı Güncelle</button>
+
+        }
+    </div>
+    <br />
+    <form>
+
+        <label for="fname">Firma Ünvanı</label>
+        <input type="text" value="@ViewBag.FirmaUnvani" id="funvan" name="funvan" placeholder="0">
+        <label for="fname">Faliyet Alanı</label>
+        <input type="text" value="@ViewBag.FaliyetAlani" id="falan" name="falan" placeholder="0">
+        <label for="fname">Adres</label>
+        <input type="text" value="@ViewBag.MerkezAdresi" id="adres" name="adres" placeholder="0">
+        <label for="fname">Telefon</label>
+        <input type="text" value="@ViewBag.MerkezTel" id="tel" name="tel" placeholder="0">
+        <label for="fname">Personel Sayısı</label>
+        <input type="text" value="@ViewBag.PersonelSayisi" id="psayi" name="psayi" placeholder="0">
+        <label for="fname">Taşıt Sayısı</label>
+        <input type="text" value="@ViewBag.TasitSayisi" id="tsayi" name="tsayi" placeholder="0">
+        <label for="fname">Firma Numarası</label>
+        <input type="text" value="@ViewBag.FirmaNo" id="fno" name="fno" placeholder="0">
+        <label for="fname">Firma Şifresi</label>
+        <input type="text" value="@ViewBag.FirmaSifre" id="sifre" name="sifre" placeholder="0">
+        <br />
+        <div class="d-grid">
+            <button id="kaydet">KAYDET</button>
+        </div>
+    </form>
+
+</div>
+
+
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    function Oku() {
+        window.location.reload(true)
+    }
+    $(document).ready(function () {
+        $('#kaydet').click(function () {
+            var funvan = $("#funvan").val();
+            var falan = $("#falan").val();
+            var adres = $("#adres").val();
+            var tel = $("#tel").val();
+            var psayi = $("#psayi").val();
+            var tsayi = $("#tsayi").val();
+            var fno = $("#fno").val();
+            var sifre = $("#sifre").val();
+            if (funvan != "" && falan != "" && adres != "" && tel != "" && psayi != "" && tsayi != "" && fno != "" && sifre != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/FirmaProfilDuzenle',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        if (cevap == "0") {
+                            alert("Güncelleme İşleminde Bir Sorun Oluştu.")
+                        }
+                        else {
+                            alert("Güncelleme Başarılı")
+                            window.location.reload(true)
+                            $(location).prop('href', '/Index/FirmaProfil')
+                        }
+                    }
+                });
+            }
+            else {
+                alert("Lütfen Eklemek İstediğiniz Firma Alanlarını Boş Geçmeyiniz.")
+            }
+        });
+    });
+</script>
+

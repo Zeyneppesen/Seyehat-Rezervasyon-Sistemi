@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <!--
+
+    Template 2093 Flight
+
+    http://www.tooplate.com/view/2093-flight
+
+    -->
+    <title>Üye Ol</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+    <link rel="stylesheet" href="~/2093_flight/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/2093_flight/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="~/2093_flight/css/fontAwesome.css">
+    <link rel="stylesheet" href="~/2093_flight/css/hero-slider.css">
+    <link rel="stylesheet" href="~/2093_flight/css/owl-carousel.css">
+    <link rel="stylesheet" href="~/2093_flight/css/tooplate-style.css">
+
+    <link href="https://fonts.googleapis.com/css?family=Spectral:200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link rel="shortcut icon" href="~/Galeri/title.png" />
+
+
+</head>
+
+<body>
+
+
+    <section class="page-heading" id="top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-direction-button">
+                        <a href="/Index/Login"><i class="fa fa-sign-in"></i>Giriş Yap</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+
+    <section class="contact-form">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h2>MÜŞTERİ KAYIT FORMU</h2>
+                    </div>
+                </div>
+                <div class="col-md-6 col-md-offset-3">
+                    <form>
+                        <div class="col-md-12">
+                            <label style="color:white"><i class="fa fa-user"></i> ADINIZ</label>
+                            <fieldset>
+                                <input name="adi" type="text" class="form-control" id="adi" placeholder="Adınız..." required>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <label style="color:white"><i class="fa fa-user"></i> SOYADINIZ</label>
+                            <fieldset>
+                                <input name="soyadi" type="text" class="form-control" id="soyadi" placeholder="Soyadınız..." required>
+                            </fieldset>
+                        </div>
+
+                        <div class="col-md-12">
+                            <label style="color:white"><i class="fa fa-address-card"></i> ADRESİNİZ</label>
+                            <fieldset>
+                                <textarea name="adres" rows="6" class="form-control" id="adres" placeholder="Adresiniz..." required></textarea>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <label style="color:white"><i class="fa fa-phone"></i> TELEFON NUMARANIZ</label>
+                            <fieldset>
+                                <input name="tel" type="text" class="form-control" id="tel" placeholder="Telefon Numaranız..." required>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <label style="color:white"><i class="fa fa-envelope"></i> EMAIL ADRESİNİZ</label>
+                            <fieldset>
+                                <input name="email" type="text" class="form-control" id="email" placeholder="E-mail Adresiniz..." required>
+                            </fieldset>
+                        </div>
+                        <div class="col-md-12">
+                            <label style="color:white"><i class="fa fa-key"></i> ŞİFRENİZ</label>
+                            <fieldset>
+                                <input name="sifre" type="text" class="form-control" id="sifre" placeholder="Şifreniz..." required>
+                            </fieldset>
+                        </div>
+                        <button type="button" id="kayit" class="btn"><i class="fa fa-user-plus" aria-hidden="true"></i> KAYIT OL</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br /><br /><br /><br /><br /><br />
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="primary-button">
+                        <a href="#" class="scroll-top">Başa Dön</a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <ul class="social-icons">
+                        <li><a href="https://www.facebook.com/"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="#"><i class="fa fa-rss"></i></a></li>
+                        <li><a href="#"><i class="fa fa-behance"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <p>
+                        &copy; @DateTime.Now.Year Seyehat Rezervasyon Sistemi
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script src="~/Scripts/jquery-3.6.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#kayit').click(function () {
+                var adi = $("#adi").val();
+                var soyadi = $("#soyadi").val();
+                var adres = $("#adres").val();
+                var tel = $("#tel").val();
+                var email = $("#email").val();
+                var sifre = $("#sifre").val();
+                if (adi != "" && soyadi != "" && adres != "" && email != "" && tel != "" && sifre != "") {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Index/KayitOl',
+                        dataType: 'json',
+                        data: $('form').serialize(),
+                        success: function (cevap) {
+                            if (cevap[0].Durum == 0) {
+                                alert("Bir Hata Oluştu. Lütfen Tekrar Deneyin.");
+                                $(location).prop('href', '/Index/UyeOl')
+                            }
+                            else if (cevap[0].Durum == 2) {
+                                alert("Girilen Email Adresi İle Kayıtlı Müşteri Var.");
+                            }
+                            else {
+                                alert("Kayıt Yapıldı. Girilen Email ve Şifre Bilgisi İle Giriş Yapınız.");
+                                $(location).prop('href', '/Index/Login')
+                            }
+                        }
+
+                    });
+                }
+                else {
+                    alert("Lütfen Kayıt Olmak İçin Gerekli Alnları Doldurunuz.");
+                }
+            });
+        });
+    </script>
+
+
+
+
+</body>
+</html>

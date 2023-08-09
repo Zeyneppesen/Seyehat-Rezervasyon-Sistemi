@@ -1,0 +1,188 @@
+﻿
+@{
+    ViewBag.Title = "Iletisim";
+    Layout = "~/Views/Shared/IndexLayout.cshtml";
+}
+
+<style>
+
+
+    input[type=text], select, textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    label {
+        padding: 12px 12px 12px 0;
+        display: inline-block;
+    }
+
+    input[type=submit] {
+        background-color: #04AA6D;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+
+
+    .col-25 {
+        float: left;
+        width: 25%;
+        margin-top: 6px;
+    }
+
+    .col-75 {
+        float: left;
+        width: 75%;
+        margin-top: 6px;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+    @@media screen and (max-width: 600px) {
+        .col-25, .col-75, input[type=submit] {
+            width: 100%;
+            margin-top: 0;
+        }
+    }
+</style>
+
+<style>
+
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #0c43c7;
+        border-radius: 7px;
+    }
+</style>
+
+<div class="container">
+    <h2 style="font-weight:bold;text-align:center">İLETİŞİM FORMU</h2>
+    <hr class="rounded">
+    <H4>Merhaba Değerli Sistem Kullanıcısı. Lütfen şikayet, öneri veya dileklerinizi formumuzda bulunan yorum alanına, bilgilerinizide eksiksiz doldurarak gönderiniz. </H4>
+    <p><b>ESEN SEYEHAT REZERVASYON SİSTEMİ</b></p>
+    <hr class="solid">
+    <form>
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 id="MesajBaslik" class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="Mesaj"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" onclick="Kapat()" class="btn btn-default" data-dismiss="modal">Kapat</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="fname">Adınız ve Soyadınız</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="ad" name="ad" placeholder="Ad ve Soyad Yazınız..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="lname">E-posta Adresiniz</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="mail" name="mail" placeholder="E-posta adresinizi yazınız..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="lname">Konu</label>
+            </div>
+            <div class="col-75">
+                <input type="text" id="konu" name="konu" placeholder="Ne ile ilgili Ulaşım Sağlıyorsunuz..">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <label for="subject">Mesajınız</label>
+            </div>
+            <div class="col-75">
+                <textarea id="mesaj" name="mesaj" placeholder="Mesajınızı Yazınız.." style="height:200px"></textarea>
+            </div>
+        </div>
+
+
+        <br />
+        <br />
+    </form>
+    <div class="row">
+        <button id="gonder" class="btn btn-primary" style="float:right;width:75%;height:50px">GÖNDER</button>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+
+<script>
+    function Kapat() {
+        $('#myModal').collapse("hide")
+
+        window.location.reload(true)
+    }
+    $(document).ready(function () {
+        $('#gonder').click(function () {
+            var ad = $("#ad").val();
+            var mail = $("#mail").val();
+            var konu = $("#konu").val();
+            var mesaj = $("#mesaj").val();
+            if (mesaj != "" && ad != "" && mail != "" && konu != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/IletisimGonder',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        if (cevap == 1) {
+                            document.getElementById("Mesaj").innerHTML = "Görüşünüz yetkililere başarıyla ulaşmıştır.";
+                            document.getElementById("MesajBaslik").innerHTML = "<i class=\"fa fa-info-circle\" style=\"color:blue\"></i> UYARI";
+                            $('#myModal').collapse("toggle");
+                        }
+                        else {
+                            alert("Kaydetme İşleminde Hata Oluştu.")
+                        }
+                    }
+
+                });
+            }
+            else {
+                document.getElementById("Mesaj").innerHTML = "Lütfen Gerekli Bilgileri Doğru ve Eksiksiz Doldurunuz.";
+                document.getElementById("MesajBaslik").innerHTML = "<i class=\"fa fa-exclamation-triangle\" style=\"color:red\"></i> YETERSİZ BİLGİ";
+                $('#myModal').collapse("toggle")
+            }
+
+        });
+
+
+
+    });
+</script>
+

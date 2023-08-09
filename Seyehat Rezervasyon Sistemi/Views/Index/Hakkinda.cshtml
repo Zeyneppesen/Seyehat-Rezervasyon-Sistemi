@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Hakkinda";
+    Layout = "~/Views/Shared/IndexLayout.cshtml";
+}
+
+<br />
+<style>
+
+    hr.solid {
+        border-top: 3px solid #bbb;
+    }
+
+    hr.rounded {
+        border-top: 8px solid #0c43c7;
+        border-radius: 7px;
+    }
+</style>
+<br />
+<div class="container">
+    <div class="row">
+
+        <h2 style="font-weight:bold;text-align:center">HAKKIMIZDA</h2>
+        <hr class="rounded">
+        <div>
+            <div class="col-lg-6">
+                <video width="580px" height="336px" autoplay>
+                    <source src="~/Galeri/H1.mp4" type="video/webm" />
+                    <source src="~/Galeri/H1.mp4" type="video/webm">
+                </video>
+            </div>
+            <div class="col-lg-6">
+                <h4 style="font-family: 'Californian FB'; font-weight: bold; text-align: justify">
+                        @ViewBag.Mesaj
+                </h4>
+            </div>
+        </div>
+
+    </div>
+</div>
+

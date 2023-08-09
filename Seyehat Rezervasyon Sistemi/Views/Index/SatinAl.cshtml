@@ -1,0 +1,569 @@
+﻿
+@{
+    ViewBag.Title = "SatinAl";
+    Layout = "~/Views/Shared/IndexLayout.cshtml";
+    int say = 1;
+}
+
+<style>
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 1px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
+
+    /* Add Animation */
+    @@-webkit-keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    @@keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0
+        }
+
+        to {
+            top: 0;
+            opacity: 1
+        }
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .modal-header {
+        padding: 2px 16px;
+        background-color: #1f3646;
+        color: white;
+    }
+
+    .modal-body {
+        padding: 2px 16px;
+    }
+
+    .modal-footer {
+        padding: 2px 16px;
+        background-color: #1f3646;
+        color: white;
+    }
+</style>
+
+
+
+<style>
+    body {
+        font-family: Arial;
+        font-size: 17px;
+        /*padding: 8px;*/
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .row {
+        display: -ms-flexbox; /* IE10 */
+        display: flex;
+        -ms-flex-wrap: wrap; /* IE10 */
+        flex-wrap: wrap;
+        margin: 0 -16px;
+    }
+
+    .col-25 {
+        -ms-flex: 25%; /* IE10 */
+        flex: 25%;
+    }
+
+    .col-50 {
+        -ms-flex: 49%; /* IE10 */
+        flex: 49%;
+    }
+
+    .col-75 {
+        -ms-flex: 75%; /* IE10 */
+        flex: 75%;
+    }
+
+    .col-25,
+    .col-50,
+    .col-75 {
+        padding: 0 16px;
+    }
+
+    .container {
+        /* background-color: #f2f2f2;
+    padding: 5px 20px 15px 20px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;*/
+    }
+
+    input[type=text] {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+    }
+
+    label {
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .icon-container {
+        /*  margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;*/
+    }
+
+    .btn {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 12px;
+        margin: 10px 0;
+        width: 100%;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+        .btn:hover {
+            background-color: #1f3646 /*#45a049*/;
+            color: white;
+        }
+
+    a {
+        color: #2196F3;
+    }
+
+    hr {
+        border: 1px solid lightgrey;
+    }
+
+    span.price {
+        float: right;
+        color: grey;
+    }
+
+    /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
+    @@media (max-width: 800px) {
+        .row {
+            flex-direction: column-reverse;
+        }
+
+        .col-25 {
+            margin-bottom: 20px;
+        }
+    }
+
+    .vr {
+        border-left: 1px solid #1f3646;
+        height: 535px;
+    }
+</style>
+
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div id="Dbaslik" class="modal-header">
+            <span class="close">&times;</span>
+            <h2 id="Mbaslik"></h2>
+        </div>
+        <div class="modal-body">
+            <div id="Micerik"></div>
+        </div>
+        <div id="Dfoter" class="modal-footer">
+            <h3 id="Mfoter"></h3>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-75">
+        <div class="container">
+            <p>@ViewBag.Yuzde</p>
+            <form action="/action_page.php">
+
+                <div class="row">
+                    <div class="col-50">
+                        <h3>Fatura Adres Bilgileri</h3>
+                        <label for="fname"><i class="fa fa-user"></i> Adı ve Soyadı</label>
+                        <input type="text" id="name" name="name" value="@Fonksiyonlar.LoginAD @Fonksiyonlar.LoginSOYAD" placeholder="Adınız ve Soyadınızı Giriniz.">
+                        <label for="email"><i class="fa fa-envelope"></i> Email Adresi</label>
+                        <input type="text" id="email" name="email" value="@Fonksiyonlar.LoginEMAIL" placeholder="Email Adresinizi Giriniz.">
+                        <label for="adr"><i class="fa fa-address-card-o"></i> Adresiniz</label>
+                        <input type="text" id="adres" name="adres" value="@Fonksiyonlar.LoginADRES" placeholder="Açık Adres Bilginizi Giriniz.">
+                        <label for="phone"><i class="fa fa-phone"></i> Telefon Numaranız</label>
+                        <input type="text" id="tel" name="tel" value="@Fonksiyonlar.LoginTEL" placeholder="Cep Telefonu Numaranızı Giriniz.">
+                    </div>
+                    <div class="vr"></div>
+                    <div class="col-50">
+                        <h3>Ödeme Bilgileri</h3>
+                        <label for="fname">Kart Bilgileri</label>
+                        <div class="icon-container">
+                            <i class="fa fa-cc-visa" style="color:navy;"></i>
+                            <i class="fa fa-cc-amex" style="color:blue;"></i>
+                            <i class="fa fa-cc-mastercard" style="color:red;"></i>
+                            <i class="fa fa-cc-discover" style="color:orange;"></i>
+                        </div>
+                        <label for="cname">Kartın Sahibini Adı ve Soyadı</label>
+                        @if (ViewBag.Durum=="1")
+                        {
+                            <p>ESENPAY Kartı Ödeme Bilgileri</p>
+                        }
+                        <input type="text" id="cname" name="cname" value="@ViewBag.Adi" placeholder="Kartın Üzerinde Yazan Ad ve Soyad Bilgisini Giriniz.">
+                        <label for="ccnum">Kredi Kartı Numarası</label>
+                        <input type="text" id="cnum" name="cnum" maxlength="19" value="@ViewBag.KartNumarasi" onkeyup="duzenle(this)" placeholder="1111-2222-3333-4444">
+                        <div class="row">
+                            <div class="col-50">
+                                <div class="col-50">
+                                    <label for="expyear">Geçerli Ay</label>
+                                    <input type="text" id="ay" name="ay" value="@ViewBag.Ay" maxlength="2" pattern="[0-9]" placeholder="06">
+                                </div>
+                                <div class="col-50">
+                                    <label for="expyear">Geçerli Yıl</label>
+                                    <input type="text" id="yil" name="yil" value="@ViewBag.Yil" maxlength="2" placeholder="23">
+                                </div>
+
+                            </div>
+                            <div class="col-50">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" value="@ViewBag.CVV" name="cvv" maxlength="3" placeholder="111">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="d-grid">
+                    <button type="button" id="SatinAl" class="btn success">SİPARİŞLERİ SATIN AL</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-25">
+        <div class="container">
+            <h4>Siparişleriniz <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>@ViewBag.ToplamSatir</b></span></h4>
+            @if (ViewBag.Liste != null)
+            {
+                foreach (var item in ViewBag.Liste)
+                {
+                    <p><a id="@say" name="@say" onclick="Oku(this.id)"><img src="/Fotograf/@item.Logo" class="img2" alt="Avatar" style="width:20px">  @item.Siparis</a> <span class="price">@item.Fiyat</span></p>
+                    say++;
+                }
+
+                <p style="color:green"><h6 style="color:green">Yapılan İndirim Tutarı <span class="price" style="color:green">-@ViewBag.indirim</span></h6></p>
+            }
+            <hr>
+            <h2>Toplam Tutar <span class="price" style="color:black"><b>@ViewBag.ToplamFiyat ₺</b></span></h2>
+        </div>
+    </div>
+
+</div>
+<script>
+    function duzenle(element) {
+        // inputu seçiyoruz
+        var input = document.getElementById(element.id);
+        // gereksiz tireyi siliyoruz.
+        input = input.value.split('-').join('');
+        // match ile 4 karakterde bir "-" ekle diyoruz.
+        var finalVal = input.match(/.{1,4}/g).join('-');
+        // değeri tekrar inputa yazdırıyoruz.
+        document.getElementById(element.id).value = finalVal;
+    }
+</script>
+
+
+
+<script src="~/Scripts/jquery-3.6.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#SatinAl').click(function () {
+            var cname = $("#cname").val();
+            var cnum = $("#cnum").val();
+            var ay = $("#ay").val();
+            var yil = $("#yil").val();
+            var cvv = $("#cvv").val();
+            var name = $("#name").val();
+            var email = $("#email").val();
+            var adres = $("#adres").val();
+            var tel = $("#tel").val();
+            if (cname != "" && cnum != "" && ay != "" && yil != "" && cvv != "" && name != "" && email != "" && adres != "" && tel != "") {
+                $.ajax({
+                    type: 'POST',
+                    url: '/Index/SeferAlTamam',
+                    dataType: 'json',
+                    data: $('form').serialize(),
+                    success: function (cevap) {
+                        if (cevap < 0) {//Sistemde Hata Oluştu
+                            document.getElementById("Mbaslik").innerHTML = "SİSTEMDE BİR HATA OLUŞTU.";
+                            document.getElementById("Micerik").innerHTML = "<h4 style=\"color: red\"><b>İşlemler yapılırken teknik bir aksaklık oluştu.</b><h4>";
+                            document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+                            var modal = document.getElementById("myModal");
+                            document.getElementById("Dbaslik").style.backgroundColor = "red";
+                            var span = document.getElementsByClassName("close")[0];
+                            modal.style.display = "block";
+
+
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                            }
+
+                            window.onclick = function (event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            }
+                        }
+                        else if (cevap == 0) {//Kart Bulunamadı
+                            document.getElementById("Mbaslik").innerHTML = "KREDİ KARTI HATASI.";
+                            document.getElementById("Micerik").innerHTML = "<h4 style=\"color: red\"><b>Girilen kredi kartı bilgilerine ulaşılamadı. Lütfen bilgileri doğru ve eksiksiz olduğunu teyit edip tekrar deneyin</b><h4>";
+                            document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+                            var modal = document.getElementById("myModal");
+                            document.getElementById("Dbaslik").style.backgroundColor = "red";
+                            var span = document.getElementsByClassName("close")[0];
+                            modal.style.display = "block";
+
+
+                            span.onclick = function () {
+                                modal.style.display = "none";
+                            }
+
+                            window.onclick = function (event) {
+                                if (event.target == modal) {
+                                    modal.style.display = "none";
+                                }
+                            }
+                        }
+                        else {
+                            if (cevap == 1) {//yetersiz bakiye
+                                document.getElementById("Mbaslik").innerHTML = "KREDİ KARTI BAKİYE YETERSİZ.";
+                                document.getElementById("Micerik").innerHTML = "<h4 style=\"color: red\"><b>Girilen kredi kartı bakiyesi yetersizdir. Lütfen gerekli bilgileri kontrol ederek tekrar deneyiniz.</b><h4>";
+                                document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+                                var modal = document.getElementById("myModal");
+                                document.getElementById("Dbaslik").style.backgroundColor = "red";
+                                var span = document.getElementsByClassName("close")[0];
+                                modal.style.display = "block";
+
+
+                                span.onclick = function () {
+                                    modal.style.display = "none";
+                                }
+
+                                window.onclick = function (event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = "none";
+                                    }
+                                }
+                            }
+                            else if (cevap == 2) {//Başarılı !!!!!
+                                document.getElementById("Mbaslik").innerHTML = "ÖDEMENİZ YAPILDI";
+                                document.getElementById("Micerik").innerHTML = "<h4 style=\"color: green\"><b><span class=\"glyphicon\">&#xe013;</span> Satın Alma İşleminiz Başarıyla Gerçekleşmiştir.</b><h4><h4 style=\"color: green\">   Rezervasyonlarım Alanına Yönlendiriliyor.<h4><h4 style=\"color: green\">   Lütfen Bekleyiniz...<h4>";
+                                document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+                                var modal = document.getElementById("myModal");
+                                document.getElementById("Dbaslik").style.backgroundColor = "green";
+                                var span = document.getElementsByClassName("close")[0];
+                                modal.style.display = "block";
+                                var btn = document.getElementById("git");
+
+                                span.onclick = function () {
+                                    modal.style.display = "none";
+                                }
+
+                                window.onclick = function (event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = "none";
+                                    }
+                                }
+                                function Git() {
+                                    $(location).prop('href', '/Index/Rezervasyonlarim')
+                                }
+                                setTimeout(Git, 2000);
+                            }
+                            else {//Bilgiler Alınamadı
+                                document.getElementById("Mbaslik").innerHTML = "SİSTEMDE BİR HATA OLUŞTU.";
+                                document.getElementById("Micerik").innerHTML = "<h4 style=\"color: red\"><b>İşlemler yapılırken teknik bir aksaklık oluştu.</b><h4>";
+                                document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+                                var modal = document.getElementById("myModal");
+                                document.getElementById("Dbaslik").style.backgroundColor = "red";
+                                var span = document.getElementsByClassName("close")[0];
+                                modal.style.display = "block";
+
+
+                                span.onclick = function () {
+                                    modal.style.display = "none";
+                                }
+
+                                window.onclick = function (event) {
+                                    if (event.target == modal) {
+                                        modal.style.display = "none";
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                });
+            }
+            else {
+                var FDurum = false;
+                var FMesaj = "";
+                var ODurum = false;
+                var OMesaj = "";
+                if (cname == "") {
+                    ODurum = true;
+                    OMesaj += "<p>Kart Üzerindeki Ad ve Soyad,</p>";
+                }
+                if (cnum == "") {
+                    ODurum = true;
+
+                    OMesaj += "<p>Kart Numarası,</p>";
+                }
+                if (ay == "") {
+                    ODurum = true;
+                    OMesaj += "<p>Kartın Geçerli Olduğu Son Ay,</p>";
+                }
+                if (yil == "") {
+                    ODurum = true;
+                    OMesaj += "<p>Kartın Geçerli Olduğu Son Yıl,</p>";
+                }
+                if (cvv == "") {
+                    ODurum = true;
+                    OMesaj += "<p>Kart CVV Güvenlik Kodu,</p>";
+                }
+                if (ODurum == true) {
+                    OMesaj = "<h4 style=\"color: red\">Ödeme Bilgilerinde;</h4>" + OMesaj;
+                }
+
+
+
+
+
+                if (name == "") {
+                    FDurum = true;
+                    FMesaj += "<p>Faturalanacak Kişinin Adı ve Soyadı,</p>";
+                }
+                if (email == "") {
+                    FDurum = true;
+                    FMesaj += "<p>Email Adres Bilgisi,</p>";
+                }
+                if (adres == "") {
+                    FDurum = true;
+                    FMesaj += "<p>Fatura Adres Bilgisi,</p>";
+                }
+                if (tel == "") {
+                    FDurum = true;
+                    FMesaj += "<p>Cep Telefonu Numarası Bilgisi,</p>";
+                }
+                if (FDurum == true) {
+                    FMesaj = "<h4 style=\"color: red\">Fatura Adres Bilgilerinde;</h4>" + FMesaj;
+                }
+                document.getElementById("Mbaslik").innerHTML = "DEVAM EDİLEMİYOR.";
+                document.getElementById("Micerik").innerHTML = "<h4 style=\"color: red\"><b>Lütfen Fatura Bilgilerini ve Ödeme için Kart Bilgilerini Eksiksiz Bir Şekilde Doldurunuz.</b><h4>" + OMesaj + FMesaj;
+                document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+                var modal = document.getElementById("myModal");
+                //var btn = document.getElementById("git");
+                document.getElementById("Dbaslik").style.backgroundColor = "#1f3646";
+                var span = document.getElementsByClassName("close")[0];
+                modal.style.display = "block";
+
+
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            }
+
+        });
+    });
+</script>
+
+<script>
+    function Oku(al) {
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById(al);
+        document.getElementById("Mbaslik").innerHTML = btn.name + " Nolu Siparişiniz.";
+        document.getElementById("Micerik").innerHTML = "<h4 style=\"color: green\"><b>" + btn.innerText + "</b><h4>";
+        document.getElementById("Mfoter").innerHTML = "Esen Seyehat Rezervasyon Satın Alma Hizmetleri";
+        // Get the button that opens the modal
+        document.getElementById("Dbaslik").style.backgroundColor = "#1f3646";
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = "block";
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    }
+    // Get the modal
+
+</script>
+
